@@ -28,16 +28,15 @@
   }
 
   Plugin.prototype = {
-    getTimeRemaining: function()
-    {
-    
+    getTimeRemaining: function() {
       var timeRemaining = this._secondsLeft(this.getElapsedTime());
       return timeRemaining;
     },
-    getElapsedTime: function()
-    {
+
+    getElapsedTime: function() {
       return  Math.round((new Date().getTime() - this.startedAt.getTime())/1000);
     },
+
     extendTimer: function (value) {
       var seconds = parseInt(value),
           secondsElapsed = Math.round((new Date().getTime() - this.startedAt.getTime())/1000);
@@ -143,7 +142,7 @@
       var millisElapsed, secondsElapsed;
       millisElapsed = new Date().getTime() - this.startedAt.getTime();
       secondsElapsed = Math.floor((millisElapsed)/1000);
-        endAngle = (Math.PI*3.5) - (((Math.PI*2)/(this.settings.seconds * 1000)) * millisElapsed);
+      endAngle = (Math.PI*3.5) - (((Math.PI*2)/(this.settings.seconds * 1000)) * millisElapsed);
       this._clearRect();
       this._drawCountdownShape(Math.PI*3.5, false);
       if (secondsElapsed < this.settings.seconds) {
