@@ -66,9 +66,14 @@
       this.interval = setInterval(jQuery.proxy(this._draw, this), timerInterval);
     },
 
+    /* Stop the countdown timer.  If given, call 'cb' after stopping.
+     */
     stop: function (cb) {
-      clearInterval(this.interval);
-      if (cb) { cb(); }
+      if (this.interval != 0) {
+        clearInterval(this.interval);
+        this.interval = 0;
+        if (cb) { cb(); }
+      }
     },
 
     _init: function () {
@@ -76,6 +81,7 @@
       this.settings.height = this.settings.width;
       this.settings.arcX = this.settings.radius + this.settings.strokeWidth;
       this.settings.arcY = this.settings.arcX;
+      this.interval = 0;
       this._initPen(this._getCanvas());
       if (this.settings.autostart) { this.start(); }
     },
