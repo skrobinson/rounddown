@@ -82,6 +82,33 @@
       }
     },
 
+    /* Get or set the radius value.
+    *
+    * If set, redraws the countdown timer using the new value.
+    *
+    * @param {Number} radius - If not given, returns the current radius.
+    * A passed value will override the current radius and redraw the timer.
+    */
+    radius: function (radius) {
+      if (radius === undefined) {
+        return this.settings.radius;
+      } else {
+        // Calculate the direction and magnitude of the radius change.
+        var ratio = radius / this.settings.radius;
+        // Update values.
+        this.settings.radius = radius;
+        this.settings.fontSize = this.settings.fontSize * ratio;
+        this.settings.arcX = radius + this.settings.strokeWidth;
+        this.settings.arcY = this.settings.arcX;
+        this.settings.width = (radius + this.settings.strokeWidth) * 2;
+        this.settings.height = this.settings.width;
+        // Update pen from new values.
+        this._initPen(this._getCanvas());
+        // Redraw everything.
+        this._draw();
+      }
+    },
+
     _init: function () {
       this.settings.width = (this.settings.radius * 2) + (this.settings.strokeWidth * 2);
       this.settings.height = this.settings.width;
