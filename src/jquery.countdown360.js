@@ -1,3 +1,11 @@
+/*
+ *  Countdown 360 - v0.1.9
+ *  This is a simple attractive circular countdown timer that counts down a number of seconds. The style is configurable and callbacks are supported on completion.
+ *  https://github.com/johnschult/jquery.countdown360
+ *
+ *  Made by John Schult
+ *  Under MIT License
+ */
 ;(function ($, window, document, undefined) {
   var pluginName = "countdown360",
     defaults = {
