@@ -55,7 +55,13 @@
         }
     },
 
+    /* Start the countdown timer.  If the countdown is running when this
+     * method is called, the countdown is stopped and restarted.
+     */
     start: function () {
+      if (this.interval != 0) {
+        clearInterval(this.interval);
+      }
       this.startedAt = new Date();
       this._drawCountdownShape(Math.PI*3.5, true);
       this._drawCountdownLabel(0);
