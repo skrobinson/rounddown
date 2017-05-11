@@ -1,10 +1,18 @@
 /*
- *  Countdown 360 - v0.1.9
- *  This is a simple attractive circular countdown timer that counts down a number of seconds. The style is configurable and callbacks are supported on completion.
- *  https://github.com/johnschult/jquery.countdown360
+ * RoundDown - v0.1.9.1
  *
- *  Made by John Schult
- *  Under MIT License
+ * A round countdown timer copied and adapted from Countdown 360.
+ *
+ * Countdown 360 is a simple attractive circular countdown timer that counts
+ * down a number of seconds. The style is configurable and callbacks are
+ * supported on completion.
+ * https://github.com/johnschult/jquery.countdown360
+ *
+ * Made by John Schult
+ * Under MIT License
+ *
+ * Edits and additions are copyright 2017 by Scottsdale Community College.
+ * Edited by Sean Robinson <sean.robinson@scottsdalecc.edu>
  */
 ;(function ($, window, document, undefined) {
   var pluginName = "countdown360",
