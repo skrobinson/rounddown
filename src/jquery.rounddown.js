@@ -118,8 +118,14 @@
         this.settings.arcY = this.settings.arcX;
         this.settings.width = (radius + this.settings.strokeWidth) * 2;
         this.settings.height = this.settings.width;
-        // Update pen from new values.
-        this._initPen(this._getCanvas());
+        // Reset pen values after each radius change.
+        this.pen.canvas.width = this.settings.width;
+        this.pen.canvas.height = this.settings.height;
+        this.pen.lineWidth = this.settings.strokeWidth;
+        this.pen.strokeStyle = this.settings.strokeStyle;
+        this.pen.fillStyle = this.settings.fillStyle;
+        this.pen.textAlign = "center";
+        this.pen.textBaseline = "middle";
         // Redraw everything.
         this._draw();
       }
