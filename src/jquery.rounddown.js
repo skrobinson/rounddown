@@ -15,7 +15,7 @@
  * Edited by Sean Robinson <sean.robinson@scottsdalecc.edu>
  */
 ;(function ($, window, document, undefined) {
-  var pluginName = "countdown360",
+  var pluginName = "rounddown",
     defaults = {
       radius: 15.5,                    // radius of arc
       strokeStyle: "#477050",          // the color of the stroke
@@ -136,10 +136,10 @@
     },
 
     _getCanvas: function () {
-      var $canvas = $("<canvas id=\"countdown360_" + $(this.element).attr("id") + "\" width=\"" +
+      var $canvas = $("<canvas id=\"rounddown_" + $(this.element).attr("id") + "\" width=\"" +
                       this.settings.width + "\" height=\"" +
                       this.settings.height + "\">" +
-                      "<span id=\"countdown-text\" role=\"status\" aria-live=\"assertive\"></span></canvas>");
+                      "<span id=\"rounddown-text\" role=\"status\" aria-live=\"assertive\"></span></canvas>");
       $(this.element).prepend($canvas[0]);
       return $canvas[0];
     },
@@ -151,7 +151,7 @@
       this.pen.fillStyle    = this.settings.fillStyle;
       this.pen.textAlign    = "center";
       this.pen.textBaseline = "middle";
-      this.ariaText = $(canvas).children("#countdown-text");
+      this.ariaText = $(canvas).children("#rounddown-text");
       this._clearRect();
     },
 
