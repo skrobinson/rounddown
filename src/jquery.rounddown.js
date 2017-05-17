@@ -211,8 +211,7 @@
         this._drawCountdownLabel(secondsElapsed);
       } else {
         this._drawCountdownLabel(this.settings.seconds);
-        this.stop();
-        this.settings.onComplete();
+        this.stop(this.settings.onComplete);
       }
     }
 
