@@ -44,6 +44,20 @@
   }
 
   Plugin.prototype = {
+
+    /* Returns the current status of the countdown timer as 'started'
+     * or 'stopped'.
+     *
+     * @returns {String}
+     */
+    getStatus: function() {
+      var status = 'stopped';
+      if (this.interval != 0) {
+        status = 'started';
+      }
+      return status;
+    },
+
     getTimeRemaining: function() {
       var timeRemaining = this._secondsLeft(this.getElapsedTime());
       return timeRemaining;
