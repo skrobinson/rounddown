@@ -223,7 +223,7 @@
       if (secondsElapsed < this.settings.seconds) {
         this._drawCountdownShape(endAngle, true);
         this._drawCountdownLabel(secondsElapsed);
-      } else {
+      } else if (this.getStatus() !== 'stopped') {
         this._drawCountdownLabel(this.settings.seconds);
         this.stop(this.settings.onComplete);
       }
