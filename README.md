@@ -59,6 +59,7 @@ settings.
     fontWeight: 700,                 // the font weight
     autostart: true,                 // start the countdown automatically
     seconds: 10,                     // the number of seconds to count down
+                                     //   Infinity seconds, if null.
     label: ["second", "seconds"],    // the label to use or false if none,
                                      //   first is singular form, second
                                      //   is plural

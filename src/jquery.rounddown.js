@@ -1,5 +1,5 @@
 /*
- * RoundDown - v0.1.9.1
+ * RoundDown - v0.1.9.2
  *
  * A round countdown timer copied and adapted from Countdown 360.
  *
@@ -146,6 +146,9 @@
     },
 
     _init: function () {
+      if (this.settings.seconds === null) {
+        this.settings.seconds = Infinity;
+      }
       this.settings.width = (this.settings.radius * 2) + (this.settings.strokeWidth * 2);
       this.settings.height = this.settings.width;
       this.settings.arcX = this.settings.radius + this.settings.strokeWidth;
@@ -190,6 +193,9 @@
           label = secondsLeft === 1 ? this.settings.label[0] : this.settings.label[1],
           drawLabel = this.settings.label && this.settings.label.length === 2,
           x = this.settings.width/2;
+      if (secondsLeft === Infinity) {
+        secondsLeft = "∞";
+      }
       if (drawLabel) {
         y = this.settings.height/2 - (this.settings.fontSize/6.2);
       } else {
