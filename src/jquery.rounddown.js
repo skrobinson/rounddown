@@ -58,11 +58,15 @@
       return status;
     },
 
+    /* Returns remaining time in seconds.
+     */
     getTimeRemaining: function() {
       var timeRemaining = this._secondsLeft(this.getElapsedTime());
       return timeRemaining;
     },
 
+    /* Returns elapsed time in seconds.
+     */
     getElapsedTime: function() {
       return  Math.round((new Date().getTime() - this.startedAt.getTime())/1000);
     },
