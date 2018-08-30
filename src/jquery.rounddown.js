@@ -1,5 +1,5 @@
 /*
- * RoundDown - v0.1.9.2
+ * RoundDown - v0.1.9.3
  *
  * A round countdown timer copied and adapted from Countdown 360.
  *
@@ -11,7 +11,7 @@
  * Made by John Schult
  * Under MIT License
  *
- * Edits and additions are copyright 2017 by Scottsdale Community College.
+ * Edits and additions are copyright 2017,2018 by Scottsdale Community College.
  * Edited by Sean Robinson <sean.robinson@scottsdalecc.edu>
  */
 ;(function ($, window, document, undefined) {
@@ -40,6 +40,7 @@
     if (!this.settings.strokeWidth) { this.settings.strokeWidth = this.settings.radius/4; }
     this._defaults = defaults;
     this._name = pluginName;
+    this._pausedTimeElapsed = null;
     this._init();
   }
 
@@ -52,7 +53,9 @@
      */
     getStatus: function() {
       var status = 'stopped';
-      if (this.interval != 0) {
+      if (this._pausedTimeElapsed !== null) {
+        status = 'paused';
+      } else if (this.interval != 0) {
         status = 'started';
       }
       return status;
@@ -86,6 +89,27 @@
           this.start();
         } else {
           this.settings.seconds += parseInt(value);
+        }
+    },
+
+    /* Pause the countdown timer.  Ignored if timer is not started.
+     */
+    pause: function () {
+        if (this.getStatus() === 'started') {
+            this.stop();
+            this._pausedTimeElapsed = this.getElapsedTime() * 1000;
+        }
+    },
+
+    /* Resume the paused countdown timer.  Ignored if timer is not paused.
+     */
+    resume: function () {
+        if (this.getStatus() === 'paused') {
+            this.start();
+            // Update startedAt after starting.  Use a time previous to now
+            // by the amount of time elapsed before pause.
+            this.startedAt = new Date(new Date().getTime() - this._pausedTimeElapsed);
+            this._pausedTimeElapsed = null;
         }
     },
 
