@@ -23,7 +23,7 @@ $.widget('scottsdalecc.rounddown', {
         fontSize: undefined,           // the font size, dynamically calulated if omitted in options
         fontWeight: 700,               // the font weight
         label: ["second", "seconds"],  // the label to use or false if none
-        onComplete: function () {},
+        onComplete: function() {},
         pausedTimeElapsed: null,
         seconds: 10,                   // the number of seconds to count down
         smooth: false,                 // should the timer be smooth or stepping
@@ -42,7 +42,7 @@ $.widget('scottsdalecc.rounddown', {
         }
     },
 
-    _init: function () {
+    _init: function() {
         if (this.options.seconds === null) {
             this.options.seconds = Infinity;
         }
@@ -85,7 +85,7 @@ $.widget('scottsdalecc.rounddown', {
                             this.startedAt.getTime()) / 1000);
     },
 
-    extendTimer: function (value) {
+    extendTimer: function(value) {
         var seconds = parseInt(value),
             secondsElapsed = Math.round((new Date().getTime() -
                                             this.startedAt.getTime())/1000);
@@ -94,7 +94,7 @@ $.widget('scottsdalecc.rounddown', {
         }
     },
 
-    addSeconds: function (value) {
+    addSeconds: function(value) {
         var secondsElapsed = Math.round((new Date().getTime() -
                                             this.startedAt.getTime())/1000);
         if (this.options.startOverAfterAdding) {
@@ -108,7 +108,7 @@ $.widget('scottsdalecc.rounddown', {
 
     /* Pause the countdown timer.  Ignored if timer is not started.
      */
-    pause: function () {
+    pause: function() {
         if (this.getStatus() === 'started') {
             this.stop();
             this.options.pausedTimeElapsed = this.getElapsedTime() * 1000;
@@ -117,7 +117,7 @@ $.widget('scottsdalecc.rounddown', {
 
     /* Resume the paused countdown timer.  Ignored if timer is not paused.
      */
-    resume: function () {
+    resume: function() {
         if (this.getStatus() === 'paused') {
             this.start();
             // Update startedAt after starting.  Use a time previous to now
@@ -131,7 +131,7 @@ $.widget('scottsdalecc.rounddown', {
     /* Start the countdown timer.  If the countdown is running when this
      * method is called, the countdown is stopped and restarted.
      */
-    start: function () {
+    start: function() {
         if (this.interval != 0) {
             clearInterval(this.interval);
         }
@@ -147,7 +147,7 @@ $.widget('scottsdalecc.rounddown', {
 
     /* Stop the countdown timer.  If given, call 'cb' after stopping.
      */
-    stop: function (cb) {
+    stop: function(cb) {
         if (this.interval != 0) {
             clearInterval(this.interval);
             this.interval = 0;
@@ -164,7 +164,7 @@ $.widget('scottsdalecc.rounddown', {
      * @param {Number} radius - If not given, returns the current radius.
      * A passed value will override the current radius and redraw the timer.
      */
-    radius: function (radius) {
+    radius: function(radius) {
         if (radius === undefined) {
             return this.options.radius;
         } else {
@@ -190,7 +190,7 @@ $.widget('scottsdalecc.rounddown', {
         }
     },
 
-    _getCanvas: function () {
+    _getCanvas: function() {
         var $canvas = $("<canvas id=\"rounddown_" +
                         $(this.element).attr("id") + "\" width=\"" +
                         this.options.width + "\" height=\"" +
@@ -201,7 +201,7 @@ $.widget('scottsdalecc.rounddown', {
         return $canvas[0];
     },
 
-    _initPen: function (canvas) {
+    _initPen: function(canvas) {
         this.pen = canvas.getContext("2d");
         this.pen.lineWidth = this.options.strokeWidth;
         this.pen.strokeStyle = this.options.strokeStyle;
@@ -212,7 +212,7 @@ $.widget('scottsdalecc.rounddown', {
         this._clearRect();
     },
 
-    _clearRect: function () {
+    _clearRect: function() {
         this.pen.clearRect(0, 0, this.options.width, this.options.height);
     },
 
@@ -220,7 +220,7 @@ $.widget('scottsdalecc.rounddown', {
         return this.options.seconds - secondsElapsed;
     },
 
-    _drawCountdownLabel: function (secondsElapsed) {
+    _drawCountdownLabel: function(secondsElapsed) {
         this.ariaText.text(secondsLeft);
         this.pen.font = this.options.fontWeight + " " +
                             this.options.fontSize + "px " +
@@ -253,7 +253,7 @@ $.widget('scottsdalecc.rounddown', {
         }
     },
 
-    _drawCountdownShape: function (endAngle, drawStroke) {
+    _drawCountdownShape: function(endAngle, drawStroke) {
         this.pen.fillStyle = this.options.fillStyle;
         this.pen.beginPath();
         this.pen.arc(this.options.arcX, this.options.arcY,
@@ -264,7 +264,7 @@ $.widget('scottsdalecc.rounddown', {
         }
     },
 
-    _draw: function () {
+    _draw: function() {
         var millisElapsed, secondsElapsed;
         millisElapsed = new Date().getTime() - this.startedAt.getTime();
         secondsElapsed = Math.floor((millisElapsed) / 1000);
