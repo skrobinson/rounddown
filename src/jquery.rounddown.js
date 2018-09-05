@@ -75,8 +75,7 @@ $.widget('scottsdalecc.rounddown', {
     /* Returns remaining time in seconds.
      */
     getTimeRemaining: function() {
-        var timeRemaining = this._secondsLeft(this.getElapsedTime());
-        return timeRemaining;
+        return this._secondsLeft(this.getElapsedTime());
     },
 
     /* Returns elapsed time in seconds.
