@@ -64,7 +64,7 @@ $.widget('scottsdalecc.rounddown', {
      */
     getStatus: function() {
         var status = 'stopped';
-        if (this._pausedTimeElapsed !== null) {
+        if (this.options.pausedTimeElapsed !== null) {
             status = 'paused';
         } else if (this.interval != 0) {
             status = 'started';
@@ -82,7 +82,7 @@ $.widget('scottsdalecc.rounddown', {
      */
     getElapsedTime: function() {
         return Math.round((new Date().getTime() -
-                            this.startedAt.getTime())/1000);
+                            this.startedAt.getTime()) / 1000);
     },
 
     extendTimer: function (value) {
@@ -111,7 +111,7 @@ $.widget('scottsdalecc.rounddown', {
     pause: function () {
         if (this.getStatus() === 'started') {
             this.stop();
-            this._pausedTimeElapsed = this.getElapsedTime() * 1000;
+            this.options.pausedTimeElapsed = this.getElapsedTime() * 1000;
         }
     },
 
@@ -123,8 +123,8 @@ $.widget('scottsdalecc.rounddown', {
             // Update startedAt after starting.  Use a time previous to now
             // by the amount of time elapsed before pause.
             this.startedAt = new Date(new Date().getTime() -
-                                        this._pausedTimeElapsed);
-            this._pausedTimeElapsed = null;
+                                        this.options.pausedTimeElapsed);
+            this.options.pausedTimeElapsed = null;
         }
     },
 
