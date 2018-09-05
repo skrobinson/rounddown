@@ -57,6 +57,25 @@ $.widget('scottsdalecc.rounddown', {
         }
     },
 
+    addSeconds: function(value) {
+        var secondsElapsed = Math.round((new Date().getTime() -
+                                            this.startedAt.getTime())/1000);
+        if (this.options.startOverAfterAdding) {
+            this.options.seconds = this._secondsLeft(secondsElapsed) +
+                                        parseInt(value);
+            this.start();
+        } else {
+            this.options.seconds += parseInt(value);
+        }
+    },
+
+    /* Returns elapsed time in seconds.
+     */
+    getElapsedTime: function() {
+        return Math.round((new Date().getTime() -
+                            this.startedAt.getTime()) / 1000);
+    },
+
     /* Returns the current status of the countdown timer as 'started',
      * 'stopped', or 'paused'.
      *
@@ -78,13 +97,6 @@ $.widget('scottsdalecc.rounddown', {
         return this._secondsLeft(this.getElapsedTime());
     },
 
-    /* Returns elapsed time in seconds.
-     */
-    getElapsedTime: function() {
-        return Math.round((new Date().getTime() -
-                            this.startedAt.getTime()) / 1000);
-    },
-
     extendTimer: function(value) {
         var seconds = parseInt(value),
             secondsElapsed = Math.round((new Date().getTime() -
@@ -94,24 +106,45 @@ $.widget('scottsdalecc.rounddown', {
         }
     },
 
-    addSeconds: function(value) {
-        var secondsElapsed = Math.round((new Date().getTime() -
-                                            this.startedAt.getTime())/1000);
-        if (this.options.startOverAfterAdding) {
-            this.options.seconds = this._secondsLeft(secondsElapsed) +
-                                        parseInt(value);
-            this.start();
-        } else {
-            this.options.seconds += parseInt(value);
-        }
-    },
-
     /* Pause the countdown timer.  Ignored if timer is not started.
      */
     pause: function() {
         if (this.getStatus() === 'started') {
             this.stop();
             this.options.pausedTimeElapsed = this.getElapsedTime() * 1000;
+        }
+    },
+
+    /* Get or set the radius value.
+     *
+     * If set, redraws the countdown timer using the new value.
+     *
+     * @param {Number} radius - If not given, returns the current radius.
+     * A passed value will override the current radius and redraw the timer.
+     */
+    radius: function(radius) {
+        if (radius === undefined) {
+            return this.options.radius;
+        } else {
+            // Calculate the direction and magnitude of the radius change.
+            var ratio = radius / this.options.radius;
+            // Update values.
+            this.options.radius = radius;
+            this.options.fontSize = this.options.fontSize * ratio;
+            this.options.arcX = radius + this.options.strokeWidth;
+            this.options.arcY = this.options.arcX;
+            this.options.width = (radius + this.options.strokeWidth) * 2;
+            this.options.height = this.options.width;
+            // Reset pen values after each radius change.
+            this.pen.canvas.width = this.options.width;
+            this.pen.canvas.height = this.options.height;
+            this.pen.lineWidth = this.options.strokeWidth;
+            this.pen.strokeStyle = this.options.strokeStyle;
+            this.pen.fillStyle = this.options.fillStyle;
+            this.pen.textAlign = "center";
+            this.pen.textBaseline = "middle";
+            // Redraw everything.
+            this._draw();
         }
     },
 
@@ -154,39 +187,6 @@ $.widget('scottsdalecc.rounddown', {
             if (cb) {
                 cb();
             }
-        }
-    },
-
-    /* Get or set the radius value.
-     *
-     * If set, redraws the countdown timer using the new value.
-     *
-     * @param {Number} radius - If not given, returns the current radius.
-     * A passed value will override the current radius and redraw the timer.
-     */
-    radius: function(radius) {
-        if (radius === undefined) {
-            return this.options.radius;
-        } else {
-            // Calculate the direction and magnitude of the radius change.
-            var ratio = radius / this.options.radius;
-            // Update values.
-            this.options.radius = radius;
-            this.options.fontSize = this.options.fontSize * ratio;
-            this.options.arcX = radius + this.options.strokeWidth;
-            this.options.arcY = this.options.arcX;
-            this.options.width = (radius + this.options.strokeWidth) * 2;
-            this.options.height = this.options.width;
-            // Reset pen values after each radius change.
-            this.pen.canvas.width = this.options.width;
-            this.pen.canvas.height = this.options.height;
-            this.pen.lineWidth = this.options.strokeWidth;
-            this.pen.strokeStyle = this.options.strokeStyle;
-            this.pen.fillStyle = this.options.fillStyle;
-            this.pen.textAlign = "center";
-            this.pen.textBaseline = "middle";
-            // Redraw everything.
-            this._draw();
         }
     },
 
