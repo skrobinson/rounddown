@@ -265,7 +265,7 @@ $.widget('scottsdalecc.rounddown', {
             clearInterval(this.options.interval);
         }
         this.startedAt = new Date();
-        this._drawCountdownShape(Math.PI * 3.5, true);
+        this.drawCountdownShape(fullCircle, true);
         this.drawCountdownLabel(this.options.seconds);
         var timerInterval = 1000;
         if (this.options.smooth) {
@@ -294,12 +294,12 @@ $.widget('scottsdalecc.rounddown', {
         var millisElapsed, secondsElapsed;
         millisElapsed = new Date().getTime() - this.startedAt.getTime();
         secondsElapsed = Math.floor((millisElapsed) / 1000);
-        endAngle = (Math.PI * 3.5) - (((Math.PI * 2) /
+        endAngle = fullCircle - (((Math.PI * 2) /
                         (this.options.seconds * 1000)) * millisElapsed);
         this.options.pen.clearRect(0, 0, this.options.width, this.options.height);
-        this._drawCountdownShape(Math.PI * 3.5, false);
+        this.drawCountdownShape(fullCircle, false);
         if (secondsElapsed < this.options.seconds) {
-            this._drawCountdownShape(endAngle, true);
+            this.drawCountdownShape(endAngle, true);
             this.drawCountdownLabel(this.secondsLeft(secondsElapsed));
         } else if (this.getStatus() !== 'stopped') {
             this.drawCountdownLabel(this.secondsLeft(this.options.seconds));
