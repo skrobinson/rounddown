@@ -2,6 +2,9 @@
 Changes that will help me
 -------------------------
 
+- rather than getStatus, mode chnages should emit an event that listeners
+can react to
+
 - onComplete should be an Array of callbacks or a Promise
 
 - should be only loosely coupled to interval for easier pause/resume
