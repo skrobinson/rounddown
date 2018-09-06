@@ -15,6 +15,8 @@
  * Edited by Sean Robinson <sean.robinson@scottsdalecc.edu>
  */
 
+'use strict';
+
 // Locally relevant constants.
 const startAngle = -0.5 * Math.PI;  // radial coordinates top, CCW
 const fullCircle = 1.5 * Math.PI;  // radial coordinates top, CW
