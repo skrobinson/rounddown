@@ -14,6 +14,11 @@
  * Edits and additions are copyright 2017,2018 by Scottsdale Community College.
  * Edited by Sean Robinson <sean.robinson@scottsdalecc.edu>
  */
+
+// Locally relevant constants.
+const startAngle = -0.5 * Math.PI;  // radial coordinates top, CCW
+const fullCircle = 1.5 * Math.PI;  // radial coordinates top, CW
+
 $.widget('scottsdalecc.rounddown', {
     options: {
         autostart: true,               // start the countdown automatically
