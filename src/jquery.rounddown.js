@@ -119,6 +119,26 @@ $.widget('scottsdalecc.rounddown', {
         }
     },
 
+    /* drawCountdownShape - draw the arc
+     *
+     * All arcs drawn by this function start at 12 o'clock and proceed
+     * clockwise to endAngle.
+     *
+     * @param {Number} endAngle - arc terminus
+     * @param {Boolean} drawStroke - if true, draw the outline
+     */
+    drawCountdownShape: function(endAngle, drawStroke) {
+        var o = this.options;
+        o.pen.fillStyle = o.fillStyle;
+        o.pen.beginPath();
+        // arc(x, y, r, sAngle, eAngle, counterclockwise)
+        o.pen.arc(o.arcX, o.arcY, o.radius, startAngle, endAngle, false);
+        o.pen.fill();
+        if (drawStroke) {
+            o.pen.stroke();
+        }
+    },
+
     /* Returns a canvas object with a unique id.
      *
      * The raw canvas is accessible as the first element of the returned
@@ -268,17 +288,6 @@ $.widget('scottsdalecc.rounddown', {
 
     secondsLeft: function(secondsElapsed) {
         return this.options.seconds - secondsElapsed;
-    },
-
-    _drawCountdownShape: function(endAngle, drawStroke) {
-        this.options.pen.fillStyle = this.options.fillStyle;
-        this.options.pen.beginPath();
-        this.options.pen.arc(this.options.arcX, this.options.arcY,
-                             this.options.radius, Math.PI*1.5, endAngle, false);
-        this.options.pen.fill();
-        if (drawStroke) {
-            this.options.pen.stroke();
-        }
     },
 
     _draw: function() {
