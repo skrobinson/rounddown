@@ -67,6 +67,7 @@ $.widget('scottsdalecc.rounddown', {
         this.options.pen.textBaseline = "middle";
         this.options.ariaText = canvas.children('span');
         this.options.pen.clearRect(0, 0, this.options.width, this.options.height);
+        this.draw();
         if (this.options.autostart) {
             this.start();
         }
