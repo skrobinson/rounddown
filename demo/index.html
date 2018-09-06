@@ -4,43 +4,44 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<title></title>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-		<script src="../src/jquery.countdown360.js" type="text/javascript" charset="utf-8"></script>
-	</head>
+        <title></title>
+        <script src="../vendor/jquery.js"></script>
+        <script src="../vendor/jquery-ui.js"></script>
+        <script src="../src/jquery.rounddown.js" type="text/javascript" charset="utf-8"></script>
+    </head>
 
-	<body>
-		<div id="container">
-			<div id="countdown"></div>
-			<script type="text/javascript" charset="utf-8">
+    <body>
+        <div id="container">
+            <div id="rounddown"></div>
+            <script type="text/javascript" charset="utf-8">
 
-		 	var countdown =  $("#countdown").countdown360({
-       	 	radius      : 60,
-         	seconds     : 30,
-         	fontColor   : '#FFFFFF',
-         	autostart   : false,
-         	onComplete  : function () { console.log('done') }
-		   });
-			countdown.start();
-			console.log('countdown360 ',countdown);
-		 	$(document).on("click","button",function(e){
-		 		e.preventDefault();
-		 		var type = $(this).attr("data-type");
-		 		if(type === "time-remaining")
-		 		{
-		 			var timeRemaining = countdown.getTimeRemaining();
-		 			alert(timeRemaining);
-		 		}
-		 		else
-		 		{
-		 			var timeElapsed = countdown.getElapsedTime();
-		 			alert(timeElapsed);
-		 		}
-		 	});
-		  </script>
-		</div>
-		<button data-type="time-remaining">Time Remaining</button>
-		<button data-type="time-elapsed">Time Elapsed</button>
+                var rounddown =  $("#rounddown").rounddown({
+                                        radius      : 60,
+                                        seconds     : 30,
+                                        fontColor   : '#FFFFFF',
+                                        autostart   : false,
+                                        onComplete  : function () { console.log('done') }
+                                    });
+                rounddown.start();
+                console.log('rounddown ',rounddown);
+                $(document).on("click", "button", function (e){
+                    e.preventDefault();
+                    var type = $(this).attr("data-type");
+                    if (type === "time-remaining")
+                    {
+                        var timeRemaining = rounddown.getTimeRemaining();
+                        alert(timeRemaining);
+                    }
+                    else
+                    {
+                        var timeElapsed = rounddown.getElapsedTime();
+                        alert(timeElapsed);
+                    }
+                });
+          </script>
+        </div>
+        <button data-type="time-remaining">Time Remaining</button>
+        <button data-type="time-elapsed">Time Elapsed</button>
 
-	</body>
+    </body>
 </html>
