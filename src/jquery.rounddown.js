@@ -234,11 +234,9 @@ $.widget('scottsdalecc.rounddown', {
                                     this.options.fontSize + "px " +
                                     this.options.fontFamily;
         var secondsLeft = this._secondsLeft(secondsElapsed),
-        label = secondsLeft === 1 ? this.options.label[0] :
-                    this.options.label[1],
-                    drawLabel = this.options.label &&
-                        this.options.label.length === 2,
-                    x = this.options.width/2;
+            label = secondsLeft === 1 ? this.options.label[0] : this.options.label[1],
+            drawLabel = this.options.label && this.options.label.length === 2,
+            x = this.options.width/2;
         if (secondsLeft === Infinity) {
             secondsLeft = "∞";
         }
