@@ -78,7 +78,7 @@ $.widget('scottsdalecc.rounddown', {
         // Get a shorthand reference to the options object.
         var o = this.options;
         // Find elapsed time in milliseconds and remaining time in seconds.
-        var elapsed = new Date() - this.startedAt;
+        var elapsed = new Date() - this.startedAt || 0;
         var remainingSeconds = Math.floor((o.duration - elapsed) / 1000);
         // Calculate endAngle as a relative angular distance from startAngle.
         var endAngle = 2 * Math.PI * (1 - elapsed / o.duration) + startAngle;
