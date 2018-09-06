@@ -81,7 +81,7 @@ $.widget('scottsdalecc.rounddown', {
         var elapsed = new Date() - this.startedAt;
         var remainingSeconds = Math.floor((o.duration - elapsed) / 1000);
         // Calculate endAngle as a relative angular distance from startAngle.
-        var endAngle = 2 * Math.Pi * (1 - elapsed / o.duration) + startAngle;
+        var endAngle = 2 * Math.PI * (1 - elapsed / o.duration) + startAngle;
         // Erase the canvas before beginning new drawing.
         o.pen.clearRect(0, 0, o.width, o.height);
         this.drawCountdownShape(fullCircle, false);
