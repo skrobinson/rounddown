@@ -51,14 +51,14 @@ $.widget('scottsdalecc.rounddown', {
         this.options.height = this.options.width;
         this.options.arcX = this.options.radius + this.options.strokeWidth;
         this.options.arcY = this.options.arcX;
-        this.interval = 0;
-        this.pen = canvas[0].getContext("2d");
-        this.pen.lineWidth = this.options.strokeWidth;
-        this.pen.strokeStyle = this.options.strokeStyle;
-        this.pen.fillStyle = this.options.fillStyle;
-        this.pen.textAlign = "center";
-        this.pen.textBaseline = "middle";
-        this.ariaText = canvas.children('span');
+        this.options.interval = 0;
+        this.options.pen = canvas[0].getContext("2d");
+        this.options.pen.lineWidth = this.options.strokeWidth;
+        this.options.pen.strokeStyle = this.options.strokeStyle;
+        this.options.pen.fillStyle = this.options.fillStyle;
+        this.options.pen.textAlign = "center";
+        this.options.pen.textBaseline = "middle";
+        this.options.ariaText = canvas.children('span');
         this._clearRect();
         if (this.options.autostart) {
             this.start();
@@ -119,7 +119,7 @@ $.widget('scottsdalecc.rounddown', {
         var status = 'stopped';
         if (this.options.pausedTimeElapsed !== null) {
             status = 'paused';
-        } else if (this.interval != 0) {
+        } else if (this.options.interval != 0) {
             status = 'started';
         }
         return status;
@@ -170,13 +170,13 @@ $.widget('scottsdalecc.rounddown', {
             this.options.width = (radius + this.options.strokeWidth) * 2;
             this.options.height = this.options.width;
             // Reset pen values after each radius change.
-            this.pen.canvas.width = this.options.width;
-            this.pen.canvas.height = this.options.height;
-            this.pen.lineWidth = this.options.strokeWidth;
-            this.pen.strokeStyle = this.options.strokeStyle;
-            this.pen.fillStyle = this.options.fillStyle;
-            this.pen.textAlign = "center";
-            this.pen.textBaseline = "middle";
+            this.options.pen.canvas.width = this.options.width;
+            this.options.pen.canvas.height = this.options.height;
+            this.options.pen.lineWidth = this.options.strokeWidth;
+            this.options.pen.strokeStyle = this.options.strokeStyle;
+            this.options.pen.fillStyle = this.options.fillStyle;
+            this.options.pen.textAlign = "center";
+            this.options.pen.textBaseline = "middle";
             // Redraw everything.
             this._draw();
         }
@@ -199,8 +199,8 @@ $.widget('scottsdalecc.rounddown', {
      * method is called, the countdown is stopped and restarted.
      */
     start: function() {
-        if (this.interval != 0) {
-            clearInterval(this.interval);
+        if (this.options.interval != 0) {
+            clearInterval(this.options.interval);
         }
         this.startedAt = new Date();
         this._drawCountdownShape(Math.PI * 3.5, true);
@@ -209,15 +209,15 @@ $.widget('scottsdalecc.rounddown', {
         if (this.options.smooth) {
             timerInterval = 16;
         }
-        this.interval = setInterval(jQuery.proxy(this._draw, this), timerInterval);
+        this.options.interval = setInterval(jQuery.proxy(this._draw, this), timerInterval);
     },
 
     /* Stop the countdown timer.  If given, call 'cb' after stopping.
      */
     stop: function(cb) {
-        if (this.interval != 0) {
-            clearInterval(this.interval);
-            this.interval = 0;
+        if (this.options.interval != 0) {
+            clearInterval(this.options.interval);
+            this.options.interval = 0;
             if (cb) {
                 cb();
             }
@@ -225,7 +225,7 @@ $.widget('scottsdalecc.rounddown', {
     },
 
     _clearRect: function() {
-        this.pen.clearRect(0, 0, this.options.width, this.options.height);
+        this.options.pen.clearRect(0, 0, this.options.width, this.options.height);
     },
 
     _secondsLeft: function(secondsElapsed) {
@@ -233,10 +233,10 @@ $.widget('scottsdalecc.rounddown', {
     },
 
     _drawCountdownLabel: function(secondsElapsed) {
-        this.ariaText.text(secondsLeft);
-        this.pen.font = this.options.fontWeight + " " +
-                            this.options.fontSize + "px " +
-                            this.options.fontFamily;
+        this.options.ariaText.text(secondsLeft);
+        this.options.pen.font = this.options.fontWeight + " " +
+                                    this.options.fontSize + "px " +
+                                    this.options.fontFamily;
         var secondsLeft = this._secondsLeft(secondsElapsed),
         label = secondsLeft === 1 ? this.options.label[0] :
                     this.options.label[1],
@@ -251,28 +251,28 @@ $.widget('scottsdalecc.rounddown', {
         } else {
             y = this.options.height/2;
         }
-        this.pen.fillStyle = this.options.fillStyle;
-        this.pen.fillText(secondsLeft + 1, x, y);
-        this.pen.fillStyle = this.options.fontColor;
-        this.pen.fillText(secondsLeft, x, y);
+        this.options.pen.fillStyle = this.options.fillStyle;
+        this.options.pen.fillText(secondsLeft + 1, x, y);
+        this.options.pen.fillStyle = this.options.fontColor;
+        this.options.pen.fillText(secondsLeft, x, y);
         if (drawLabel) {
-            this.pen.font = "normal small-caps " +
+            this.options.pen.font = "normal small-caps " +
                                 (this.options.fontSize/3) + "px " +
                                 this.options.fontFamily;
-            this.pen.fillText(label, this.options.width/2,
+            this.options.pen.fillText(label, this.options.width/2,
                                 this.options.height/2 +
                                 (this.options.fontSize/2.2));
         }
     },
 
     _drawCountdownShape: function(endAngle, drawStroke) {
-        this.pen.fillStyle = this.options.fillStyle;
-        this.pen.beginPath();
-        this.pen.arc(this.options.arcX, this.options.arcY,
-                        this.options.radius, Math.PI*1.5, endAngle, false);
-        this.pen.fill();
+        this.options.pen.fillStyle = this.options.fillStyle;
+        this.options.pen.beginPath();
+        this.options.pen.arc(this.options.arcX, this.options.arcY,
+                             this.options.radius, Math.PI*1.5, endAngle, false);
+        this.options.pen.fill();
         if (drawStroke) {
-            this.pen.stroke();
+            this.options.pen.stroke();
         }
     },
 
