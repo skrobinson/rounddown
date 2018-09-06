@@ -70,18 +70,6 @@ $.widget('scottsdalecc.rounddown', {
         }
     },
 
-    addSeconds: function(value) {
-        var secondsElapsed = Math.round((new Date().getTime() -
-                                            this.startedAt.getTime())/1000);
-        if (this.options.startOverAfterAdding) {
-            this.options.seconds = this.secondsLeft(secondsElapsed) +
-                                        parseInt(value);
-            this.start();
-        } else {
-            this.options.seconds += parseInt(value);
-        }
-    },
-
     /* draw - marshall drawing all the pieces
      */
     draw: function() {
@@ -209,15 +197,6 @@ $.widget('scottsdalecc.rounddown', {
      */
     getTimeRemaining: function() {
         return this.secondsLeft(this.getElapsedTime());
-    },
-
-    extendTimer: function(value) {
-        var seconds = parseInt(value),
-            secondsElapsed = Math.round((new Date().getTime() -
-                                            this.startedAt.getTime())/1000);
-        if ((this.secondsLeft(secondsElapsed) + seconds) <= this.options.seconds) {
-            this.startedAt.setSeconds(this.startedAt.getSeconds() + parseInt(value));
-        }
     },
 
     /* Pause the countdown timer.  Ignored if timer is not started.
