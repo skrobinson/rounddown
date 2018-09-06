@@ -82,6 +82,24 @@ $.widget('scottsdalecc.rounddown', {
         }
     },
 
+    /* draw - marshall drawing all the pieces
+     */
+    draw: function() {
+        var millisElapsed = new Date().getTime() - this.startedAt.getTime();
+        var secondsElapsed = Math.floor((millisElapsed) / 1000);
+        var endAngle = fullCircle - (((Math.PI * 2) /
+                        (this.options.seconds * 1000)) * millisElapsed);
+        this.options.pen.clearRect(0, 0, this.options.width, this.options.height);
+        this.drawCountdownShape(fullCircle, false);
+        if (secondsElapsed < this.options.seconds) {
+            this.drawCountdownShape(endAngle, true);
+            this.drawCountdownLabel(this.secondsLeft(secondsElapsed));
+        } else if (this.getStatus() !== 'stopped') {
+            this.drawCountdownLabel(this.secondsLeft(this.options.seconds));
+            this.stop(this.options.onComplete);
+        }
+    },
+
     /* drawCountdownLabel - draw the inner, and optionally the outer, label
      *
      * @param {Number} secondsLeft - the time until completion, in seconds
@@ -240,7 +258,7 @@ $.widget('scottsdalecc.rounddown', {
             this.options.pen.textAlign = "center";
             this.options.pen.textBaseline = "middle";
             // Redraw everything.
-            this._draw();
+            this.draw();
         }
     },
 
@@ -271,7 +289,7 @@ $.widget('scottsdalecc.rounddown', {
         if (this.options.smooth) {
             timerInterval = 16;
         }
-        this.options.interval = setInterval(jQuery.proxy(this._draw, this), timerInterval);
+        this.options.interval = setInterval(jQuery.proxy(this.draw, this), timerInterval);
     },
 
     /* Stop the countdown timer.  If given, call 'cb' after stopping.
@@ -288,22 +306,5 @@ $.widget('scottsdalecc.rounddown', {
 
     secondsLeft: function(secondsElapsed) {
         return this.options.seconds - secondsElapsed;
-    },
-
-    _draw: function() {
-        var millisElapsed, secondsElapsed;
-        millisElapsed = new Date().getTime() - this.startedAt.getTime();
-        secondsElapsed = Math.floor((millisElapsed) / 1000);
-        endAngle = fullCircle - (((Math.PI * 2) /
-                        (this.options.seconds * 1000)) * millisElapsed);
-        this.options.pen.clearRect(0, 0, this.options.width, this.options.height);
-        this.drawCountdownShape(fullCircle, false);
-        if (secondsElapsed < this.options.seconds) {
-            this.drawCountdownShape(endAngle, true);
-            this.drawCountdownLabel(this.secondsLeft(secondsElapsed));
-        } else if (this.getStatus() !== 'stopped') {
-            this.drawCountdownLabel(this.secondsLeft(this.options.seconds));
-            this.stop(this.options.onComplete);
-        }
     }
 });
