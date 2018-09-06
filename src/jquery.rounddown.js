@@ -179,7 +179,7 @@ $.widget('scottsdalecc.rounddown', {
     /* Returns elapsed time in milliseconds.
      */
     elapsedTime: function() {
-        return (new Date() - this.startedAt);
+        return new Date() - this.startedAt;
     },
 
     /* Returns the current status of the countdown timer as 'started',
