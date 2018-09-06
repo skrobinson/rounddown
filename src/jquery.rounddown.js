@@ -51,7 +51,7 @@ $.widget('scottsdalecc.rounddown', {
         this.options.arcX = this.options.radius + this.options.strokeWidth;
         this.options.arcY = this.options.arcX;
         this.interval = 0;
-        this._initPen(this._getCanvas());
+        this._initPen(this.getCanvas());
         if (this.options.autostart) {
             this.start();
         }
@@ -67,6 +67,32 @@ $.widget('scottsdalecc.rounddown', {
         } else {
             this.options.seconds += parseInt(value);
         }
+    },
+
+    /* Returns a canvas object with a unique id.
+     *
+     * The raw canvas is accessible as the first element of the returned
+     * object.
+     *
+     * @returns {jQuery object}
+     */
+    getCanvas: function() {
+        var uniqueId = 'rounddown_' + Date.now().toString(36);
+        var text = $('<span></span>')
+                        .attr({
+                            id: uniqueId + '_text',
+                            role: 'status',
+                            ariaLive: 'assertive'
+                        });
+        var canvas = $('<canvas>')
+                        .attr({
+                            id: uniqueId,
+                            height: this.options.height,
+                            width: this.options.width
+                        })
+                        .append(text);
+        this.element.prepend(canvas);
+        return canvas;
     },
 
     /* Returns elapsed time in seconds.
@@ -190,25 +216,14 @@ $.widget('scottsdalecc.rounddown', {
         }
     },
 
-    _getCanvas: function() {
-        var $canvas = $("<canvas id=\"rounddown_" +
-                        $(this.element).attr("id") + "\" width=\"" +
-                        this.options.width + "\" height=\"" +
-                        this.options.height + "\">" +
-                        "<span id=\"rounddown-text\" role=\"status\" " +
-                        "aria-live=\"assertive\"></span></canvas>");
-        $(this.element).prepend($canvas[0]);
-        return $canvas[0];
-    },
-
     _initPen: function(canvas) {
-        this.pen = canvas.getContext("2d");
+        this.pen = canvas[0].getContext("2d");
         this.pen.lineWidth = this.options.strokeWidth;
         this.pen.strokeStyle = this.options.strokeStyle;
         this.pen.fillStyle = this.options.fillStyle;
         this.pen.textAlign = "center";
         this.pen.textBaseline = "middle";
-        this.ariaText = $(canvas).children("#rounddown-text");
+        this.ariaText = canvas.children('span');
         this._clearRect();
     },
 
