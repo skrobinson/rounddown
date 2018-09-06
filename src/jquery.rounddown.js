@@ -295,4 +295,4 @@ $.widget('scottsdalecc.rounddown', {
             this.stop(this.options.onComplete);
         }
     }
-}
+});
