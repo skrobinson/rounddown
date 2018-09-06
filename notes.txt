@@ -1,9 +1,6 @@
-
-Changes that will help me:
-
-- first change to 4-space indenting
-
-- second wrap lines at 70-90 columns
+-------------------------
+Changes that will help me
+-------------------------
 
 - all internal times should be in milliseconds
 
@@ -18,7 +15,8 @@ Changes that will help me:
 - status should be a directly managed value, rather than deduced from
 other properties
 
-- auto-start after sdding time should be a parameter to addSeconds,
+- auto-start after adding time should be a parameter to addSeconds,
 not a widget-wide preferenece
 
-- turn into jquery ui widget
+- enable per-second callbacks
+-- e.g. { 57: playTick, 58: playTick, 59: playTick }
