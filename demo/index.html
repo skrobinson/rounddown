@@ -15,27 +15,27 @@
             <div id="rounddown"></div>
             <script type="text/javascript" charset="utf-8">
 
-                var rounddown =  $("#rounddown").rounddown({
+                var rd =  $("#rounddown").rounddown({
                                         radius      : 60,
                                         seconds     : 30,
                                         fontColor   : '#FFFFFF',
                                         autostart   : false,
                                         onComplete  : function () { console.log('done') }
                                     });
-                rounddown.start();
-                console.log('rounddown ',rounddown);
+                rd.rounddown('start');
+                console.debug('rounddown ', rd);
                 $(document).on("click", "button", function (e){
                     e.preventDefault();
                     var type = $(this).attr("data-type");
                     if (type === "time-remaining")
                     {
-                        var timeRemaining = rounddown.getTimeRemaining();
-                        alert(timeRemaining);
+                        var timeRemaining = rd.rounddown('remainingTime');
+                        console.log(timeRemaining + ' ms');
                     }
                     else
                     {
-                        var timeElapsed = rounddown.getElapsedTime();
-                        alert(timeElapsed);
+                        var timeElapsed = rd.rounddown('elapsedTime');
+                        console.log(timeElapsed + ' ms');
                     }
                 });
           </script>
