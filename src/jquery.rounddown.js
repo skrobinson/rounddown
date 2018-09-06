@@ -69,7 +69,7 @@ $.widget('scottsdalecc.rounddown', {
         var secondsElapsed = Math.round((new Date().getTime() -
                                             this.startedAt.getTime())/1000);
         if (this.options.startOverAfterAdding) {
-            this.options.seconds = this._secondsLeft(secondsElapsed) +
+            this.options.seconds = this.secondsLeft(secondsElapsed) +
                                         parseInt(value);
             this.start();
         } else {
@@ -128,14 +128,14 @@ $.widget('scottsdalecc.rounddown', {
     /* Returns remaining time in seconds.
      */
     getTimeRemaining: function() {
-        return this._secondsLeft(this.getElapsedTime());
+        return this.secondsLeft(this.getElapsedTime());
     },
 
     extendTimer: function(value) {
         var seconds = parseInt(value),
             secondsElapsed = Math.round((new Date().getTime() -
                                             this.startedAt.getTime())/1000);
-        if ((this._secondsLeft(secondsElapsed) + seconds) <= this.options.seconds) {
+        if ((this.secondsLeft(secondsElapsed) + seconds) <= this.options.seconds) {
             this.startedAt.setSeconds(this.startedAt.getSeconds() + parseInt(value));
         }
     },
@@ -224,7 +224,7 @@ $.widget('scottsdalecc.rounddown', {
         }
     },
 
-    _secondsLeft: function(secondsElapsed) {
+    secondsLeft: function(secondsElapsed) {
         return this.options.seconds - secondsElapsed;
     },
 
@@ -280,9 +280,9 @@ $.widget('scottsdalecc.rounddown', {
         this._drawCountdownShape(Math.PI * 3.5, false);
         if (secondsElapsed < this.options.seconds) {
             this._drawCountdownShape(endAngle, true);
-            this._drawCountdownLabel(secondsElapsed);
+            this.drawCountdownLabel(this.secondsLeft(secondsElapsed));
         } else if (this.getStatus() !== 'stopped') {
-            this._drawCountdownLabel(this.options.seconds);
+            this.drawCountdownLabel(this.secondsLeft(this.options.seconds));
             this.stop(this.options.onComplete);
         }
     }
