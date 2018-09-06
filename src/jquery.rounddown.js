@@ -59,7 +59,7 @@ $.widget('scottsdalecc.rounddown', {
         this.options.pen.textAlign = "center";
         this.options.pen.textBaseline = "middle";
         this.options.ariaText = canvas.children('span');
-        this._clearRect();
+        this.options.pen.clearRect(0, 0, this.options.width, this.options.height);
         if (this.options.autostart) {
             this.start();
         }
@@ -224,10 +224,6 @@ $.widget('scottsdalecc.rounddown', {
         }
     },
 
-    _clearRect: function() {
-        this.options.pen.clearRect(0, 0, this.options.width, this.options.height);
-    },
-
     _secondsLeft: function(secondsElapsed) {
         return this.options.seconds - secondsElapsed;
     },
@@ -282,7 +278,7 @@ $.widget('scottsdalecc.rounddown', {
         secondsElapsed = Math.floor((millisElapsed) / 1000);
         endAngle = (Math.PI * 3.5) - (((Math.PI * 2) /
                         (this.options.seconds * 1000)) * millisElapsed);
-        this._clearRect();
+        this.options.pen.clearRect(0, 0, this.options.width, this.options.height);
         this._drawCountdownShape(Math.PI * 3.5, false);
         if (secondsElapsed < this.options.seconds) {
             this._drawCountdownShape(endAngle, true);
