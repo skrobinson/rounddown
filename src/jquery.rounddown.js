@@ -77,6 +77,43 @@ $.widget('scottsdalecc.rounddown', {
         }
     },
 
+    /* drawCountdownLabel - draw the inner, and optionally the outer, label
+     *
+     * @param {Number} secondsLeft - the time until completion, in seconds
+     */
+    drawCountdownLabel: function(secondsLeft) {
+        // Get a shorthand reference to the options object.
+        var o = this.options;
+        // Choose the units label based on quantity.  Default: plural.
+        var label = o.label && o.label[1];
+        if (secondsLeft === 1) {
+            label = o.label && o.label[0];
+        } else if (secondsLeft === Infinity) {
+            secondsLeft = "∞";
+        }
+        // Find center of canvas.
+        var x = o.width / 2;
+        var y = o.height / 2;
+        // Tell Aria the important part of the label.
+        o.ariaText.text(secondsLeft);
+        // Set the context's font.
+        o.pen.font = `${o.fontWeight} ${o.fontSize} px ${o.fontFamily}`;
+        if (label) {
+            // Shift up 5/31 of font size, in pixels.  Why this amount?
+            y = y - (o.fontSize / 6.2);
+        }
+        // Draw the inner label with a drop shadow.
+        o.pen.fillStyle = o.fillStyle;
+        o.pen.fillText(secondsLeft + 1, x, y);
+        o.pen.fillStyle = o.fontColor;
+        o.pen.fillText(secondsLeft, x, y);
+        if (label) {
+            o.pen.font = `normal small-caps  ${o.fontSize / 3} px ${o.fontFamily}`;
+            // Draw units (e.g. seconds) under circle.
+            o.pen.fillText(label, o.width / 2, o.height / 2 + (o.fontSize / 2.2));
+        }
+    },
+
     /* Returns a canvas object with a unique id.
      *
      * The raw canvas is accessible as the first element of the returned
@@ -204,7 +241,7 @@ $.widget('scottsdalecc.rounddown', {
         }
         this.startedAt = new Date();
         this._drawCountdownShape(Math.PI * 3.5, true);
-        this._drawCountdownLabel(0);
+        this.drawCountdownLabel(this.options.seconds);
         var timerInterval = 1000;
         if (this.options.smooth) {
             timerInterval = 16;
@@ -226,37 +263,6 @@ $.widget('scottsdalecc.rounddown', {
 
     secondsLeft: function(secondsElapsed) {
         return this.options.seconds - secondsElapsed;
-    },
-
-    _drawCountdownLabel: function(secondsElapsed) {
-        this.options.ariaText.text(secondsLeft);
-        this.options.pen.font = this.options.fontWeight + " " +
-                                    this.options.fontSize + "px " +
-                                    this.options.fontFamily;
-        var secondsLeft = this._secondsLeft(secondsElapsed),
-            label = secondsLeft === 1 ? this.options.label[0] : this.options.label[1],
-            drawLabel = this.options.label && this.options.label.length === 2,
-            x = this.options.width/2;
-        if (secondsLeft === Infinity) {
-            secondsLeft = "∞";
-        }
-        if (drawLabel) {
-            y = this.options.height/2 - (this.options.fontSize/6.2);
-        } else {
-            y = this.options.height/2;
-        }
-        this.options.pen.fillStyle = this.options.fillStyle;
-        this.options.pen.fillText(secondsLeft + 1, x, y);
-        this.options.pen.fillStyle = this.options.fontColor;
-        this.options.pen.fillText(secondsLeft, x, y);
-        if (drawLabel) {
-            this.options.pen.font = "normal small-caps " +
-                                (this.options.fontSize/3) + "px " +
-                                this.options.fontFamily;
-            this.options.pen.fillText(label, this.options.width/2,
-                                this.options.height/2 +
-                                (this.options.fontSize/2.2));
-        }
     },
 
     _drawCountdownShape: function(endAngle, drawStroke) {
