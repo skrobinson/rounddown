@@ -2,12 +2,6 @@
 Changes that will help me
 -------------------------
 
-- all internal times should be in milliseconds
-
-- maybe store startedAt in milliseconds rather than a Date object
-
-- some externally-facing times can be in seconds
-
 - onComplete should be an Array of callbacks or a Promise
 
 - should be only loosely coupled to interval for easier pause/resume

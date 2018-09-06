@@ -22,6 +22,7 @@ const fullCircle = 1.5 * Math.PI;  // radial coordinates top, CW
 $.widget('scottsdalecc.rounddown', {
     options: {
         autostart: true,               // start the countdown automatically
+        duration: 10000,               // the number of milliseconds to count down
         fillStyle: "#8ac575",          // the fill color
         fontColor: "#477050",          // the font color
         fontFamily: "sans-serif",      // the font family
@@ -30,7 +31,6 @@ $.widget('scottsdalecc.rounddown', {
         label: ["second", "seconds"],  // the label to use or false if none
         onComplete: function() {},
         pausedTimeElapsed: null,
-        seconds: 10,                   // the number of seconds to count down
         smooth: false,                 // should the timer be smooth or stepping
         startOverAfterAdding: true,    // Start the timer over after time is added with addSeconds
         strokeStyle: "#477050",        // the color of the stroke
@@ -49,8 +49,8 @@ $.widget('scottsdalecc.rounddown', {
 
     _init: function() {
         var canvas = this.getCanvas()
-        if (this.options.seconds === null) {
-            this.options.seconds = Infinity;
+        if (this.options.duration === null) {
+            this.options.duration = Infinity;
         }
         this.options.width = (this.options.radius + this.options.strokeWidth) * 2;
         this.options.height = this.options.width;
@@ -73,18 +73,21 @@ $.widget('scottsdalecc.rounddown', {
     /* draw - marshall drawing all the pieces
      */
     draw: function() {
-        var millisElapsed = new Date().getTime() - this.startedAt.getTime();
-        var secondsElapsed = Math.floor((millisElapsed) / 1000);
-        var endAngle = fullCircle - (((Math.PI * 2) /
-                        (this.options.seconds * 1000)) * millisElapsed);
-        this.options.pen.clearRect(0, 0, this.options.width, this.options.height);
+        // Get a shorthand reference to the options object.
+        var o = this.options;
+        // Find elapsed time in milliseconds and remaining time in seconds.
+        var elapsed = new Date() - this.startedAt;
+        var remainingSeconds = Math.floor((o.duration - elapsed) / 1000);
+        // Calculate endAngle as a relative angular distance from startAngle.
+        var endAngle = 2 * Math.Pi * (1 - elapsed / o.duration) + startAngle;
+        // Erase the canvas before beginning new drawing.
+        o.pen.clearRect(0, 0, o.width, o.height);
         this.drawCountdownShape(fullCircle, false);
-        if (secondsElapsed < this.options.seconds) {
+        this.drawCountdownLabel(remainingSeconds);
+        if (elapsed < o.duration) {
             this.drawCountdownShape(endAngle, true);
-            this.drawCountdownLabel(this.secondsLeft(secondsElapsed));
         } else if (this.getStatus() !== 'stopped') {
-            this.drawCountdownLabel(this.secondsLeft(this.options.seconds));
-            this.stop(this.options.onComplete);
+            this.stop(o.onComplete);
         }
     },
 
@@ -171,11 +174,10 @@ $.widget('scottsdalecc.rounddown', {
         return canvas;
     },
 
-    /* Returns elapsed time in seconds.
+    /* Returns elapsed time in milliseconds.
      */
-    getElapsedTime: function() {
-        return Math.round((new Date().getTime() -
-                            this.startedAt.getTime()) / 1000);
+    elapsedTime: function() {
+        return (new Date() - this.startedAt);
     },
 
     /* Returns the current status of the countdown timer as 'started',
@@ -193,10 +195,10 @@ $.widget('scottsdalecc.rounddown', {
         return status;
     },
 
-    /* Returns remaining time in seconds.
+    /* Returns remaining time in milliseconds.
      */
-    getTimeRemaining: function() {
-        return this.secondsLeft(this.getElapsedTime());
+    remainingTime: function() {
+        return this.options.duration - this.elapsedTime();
     },
 
     /* Pause the countdown timer.  Ignored if timer is not started.
@@ -204,7 +206,7 @@ $.widget('scottsdalecc.rounddown', {
     pause: function() {
         if (this.getStatus() === 'started') {
             this.stop();
-            this.options.pausedTimeElapsed = this.getElapsedTime() * 1000;
+            this.options.pausedTimeElapsed = this.elapsedTime();
         }
     },
 
@@ -248,8 +250,7 @@ $.widget('scottsdalecc.rounddown', {
             this.start();
             // Update startedAt after starting.  Use a time previous to now
             // by the amount of time elapsed before pause.
-            this.startedAt = new Date(new Date().getTime() -
-                                        this.options.pausedTimeElapsed);
+            this.startedAt = new Date(new Date() - this.options.pausedTimeElapsed);
             this.options.pausedTimeElapsed = null;
         }
     },
@@ -263,7 +264,7 @@ $.widget('scottsdalecc.rounddown', {
         }
         this.startedAt = new Date();
         this.drawCountdownShape(fullCircle, true);
-        this.drawCountdownLabel(this.options.seconds);
+        this.drawCountdownLabel(this.options.duration);
         var timerInterval = 1000;
         if (this.options.smooth) {
             timerInterval = 16;
@@ -281,9 +282,5 @@ $.widget('scottsdalecc.rounddown', {
                 cb();
             }
         }
-    },
-
-    secondsLeft: function(secondsElapsed) {
-        return this.options.seconds - secondsElapsed;
     }
 });
