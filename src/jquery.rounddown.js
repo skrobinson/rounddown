@@ -195,12 +195,6 @@ $.widget('scottsdalecc.rounddown', {
         return status;
     },
 
-    /* Returns remaining time in milliseconds.
-     */
-    remainingTime: function() {
-        return this.options.duration - this.elapsedTime();
-    },
-
     /* Pause the countdown timer.  Ignored if timer is not started.
      */
     pause: function() {
@@ -241,6 +235,12 @@ $.widget('scottsdalecc.rounddown', {
             // Redraw everything.
             this.draw();
         }
+    },
+
+    /* Returns remaining time in milliseconds.
+     */
+    remainingTime: function() {
+        return this.options.duration - this.elapsedTime();
     },
 
     /* Resume the paused countdown timer.  Ignored if timer is not paused.
