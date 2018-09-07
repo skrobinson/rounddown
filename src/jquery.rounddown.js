@@ -48,6 +48,7 @@ $.widget('scottsdalecc.rounddown', {
     _init: function() {
         var canvas = this.getCanvas();
         // Initialize non-public variables.
+        this._interval = 0;  // currently running interval timer
         this._status = 'stopped';  // running status
         // Initialize options.
         if (this.options.duration === null) {
@@ -57,7 +58,6 @@ $.widget('scottsdalecc.rounddown', {
         this.options.height = this.options.width;
         this.options.arcX = this.options.radius + this.options.strokeWidth;
         this.options.arcY = this.options.arcX;
-        this.options.interval = 0;
         this.options.pen = canvas[0].getContext("2d");
         this.options.pen.lineWidth = this.options.strokeWidth;
         this.options.pen.strokeStyle = this.options.strokeStyle;
@@ -251,8 +251,8 @@ $.widget('scottsdalecc.rounddown', {
      * method is called, the countdown is stopped and restarted.
      */
     start: function() {
-        if (this.options.interval != 0) {
-            clearInterval(this.options.interval);
+        if (this._interval != 0) {
+            clearInterval(this._interval);
         }
         this.startedAt = new Date();
         this.drawCountdownShape(fullCircle, true);
@@ -261,15 +261,15 @@ $.widget('scottsdalecc.rounddown', {
         if (this.options.smooth) {
             timerInterval = 16;
         }
-        this.options.interval = setInterval(jQuery.proxy(this.draw, this), timerInterval);
+        this._interval = setInterval($.proxy(this.draw, this), timerInterval);
     },
 
     /* Stop the countdown timer.  If given, call 'cb' after stopping.
      */
     stop: function(cb) {
-        if (this.options.interval != 0) {
-            clearInterval(this.options.interval);
-            this.options.interval = 0;
+        if (this._interval != 0) {
+            clearInterval(this._interval);
+            this._interval = 0;
             if (cb) {
                 cb();
             }
