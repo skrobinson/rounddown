@@ -148,6 +148,12 @@ $.widget('scottsdalecc.rounddown', {
         }
     },
 
+    /* Returns elapsed time in milliseconds.
+     */
+    elapsedTime: function() {
+        return new Date() - this.startedAt;
+    },
+
     /* Returns a canvas object with a unique id.
      *
      * The raw canvas is accessible as the first element of the returned
@@ -172,12 +178,6 @@ $.widget('scottsdalecc.rounddown', {
                         .append(text);
         this.element.prepend(canvas);
         return canvas;
-    },
-
-    /* Returns elapsed time in milliseconds.
-     */
-    elapsedTime: function() {
-        return new Date() - this.startedAt;
     },
 
     /* Returns the current status of the countdown timer as 'started',
