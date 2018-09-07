@@ -28,7 +28,6 @@ $.widget('scottsdalecc.rounddown', {
         fontWeight: 700,               // the font weight
         label: ["second", "seconds"],  // the label to use or false if none
         onComplete: function() {},
-        pausedTimeElapsed: null,
         smooth: false,                 // should the timer be smooth or stepping
         startOverAfterAdding: true,    // Start the timer over after time is added with addSeconds
         strokeStyle: "#477050",        // the color of the stroke
@@ -50,6 +49,7 @@ $.widget('scottsdalecc.rounddown', {
         // Initialize non-public variables.
         this._interval = 0;  // currently running interval timer
         this._status = 'stopped';  // running status
+        this._pausedTimeElapsed = null;
         // Initialize options.
         if (this.options.duration === null) {
             this.options.duration = Infinity;
@@ -190,7 +190,7 @@ $.widget('scottsdalecc.rounddown', {
     pause: function() {
         if (this._status === 'started') {
             this.stop();
-            this.options.pausedTimeElapsed = this.elapsedTime();
+            this._pausedTimeElapsed = this.elapsedTime();
             this._status = 'paused';
         }
     },
@@ -241,8 +241,8 @@ $.widget('scottsdalecc.rounddown', {
             this.start();
             // Update startedAt after starting.  Use a time previous to now
             // by the amount of time elapsed before pause.
-            this.startedAt = new Date(new Date() - this.options.pausedTimeElapsed);
-            this.options.pausedTimeElapsed = null;
+            this.startedAt = new Date(new Date() - this._pausedTimeElapsed);
+            this._pausedTimeElapsed = null;
             this._status = 'started';
         }
     },
