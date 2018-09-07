@@ -274,7 +274,7 @@ $.widget('scottsdalecc.rounddown', {
         if (this.options.smooth) {
             timerInterval = 16;
         }
-        this._interval = setInterval($.proxy(this.draw, this), timerInterval);
+        this._interval = setInterval(this.draw.bind(this), timerInterval);
         this._status = 'started';
     },
 
