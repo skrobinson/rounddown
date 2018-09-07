@@ -46,7 +46,7 @@ $.widget('scottsdalecc.rounddown', {
     },
 
     _init: function() {
-        var canvas = this.getCanvas()
+        var canvas = this.getCanvas();
         if (this.options.duration === null) {
             this.options.duration = Infinity;
         }
