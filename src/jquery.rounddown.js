@@ -77,8 +77,8 @@ $.widget('scottsdalecc.rounddown', {
     draw: function() {
         // Get a shorthand reference to the options object.
         var o = this.options;
-        // Find elapsed time in milliseconds.
-        var elapsed = new Date() - this.startedAt || 0;
+        // Save a temporary copy of elapsed time, in milliseconds.
+        var elapsed = this.elapsedTime();
         // Calculate endAngle as a relative angular distance from startAngle.
         var endAngle = 2 * Math.PI * (1 - elapsed / o.duration) + startAngle;
         // Erase the canvas before beginning new drawing.
@@ -154,9 +154,17 @@ $.widget('scottsdalecc.rounddown', {
     },
 
     /* Returns elapsed time in milliseconds.
+     *
+     * @returns {Number}
      */
     elapsedTime: function() {
-        return new Date() - this.startedAt;
+        if (this._status === 'started') {
+            return new Date() - this.startedAt;
+        } else if (this._status === 'paused') {
+            return this._pausedTimeElapsed;
+        }
+        // this._status === 'stopped' or anything else
+        return 0;
     },
 
     /* Returns a canvas object with a unique id.
@@ -229,6 +237,11 @@ $.widget('scottsdalecc.rounddown', {
     },
 
     /* Returns remaining time in milliseconds.
+     *
+     * If the countdown is stopped when this function is called, the returned
+     * remaining time is the full duration.
+     *
+     * @returns {Number}
      */
     remainingTime: function() {
         return this.options.duration - this.elapsedTime();
