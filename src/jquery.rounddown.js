@@ -133,8 +133,8 @@ $.widget('scottsdalecc.rounddown', {
      * All arcs drawn by this function start at 12 o'clock and proceed
      * clockwise to endAngle.
      *
-     * @param {Number} endAngle - arc terminus
-     * @param {Boolean} drawStroke - if true, draw the outline
+     * @param {Number} endAngle - arc terminus in radians
+     * @param {Boolean} drawStroke - if true, draw only the outer edge
      */
     drawCountdownShape: function(endAngle, drawStroke) {
         var o = this.options;
@@ -142,9 +142,10 @@ $.widget('scottsdalecc.rounddown', {
         o.pen.beginPath();
         // arc(x, y, r, sAngle, eAngle, counterclockwise)
         o.pen.arc(o.arcX, o.arcY, o.radius, startAngle, endAngle, false);
-        o.pen.fill();
         if (drawStroke) {
             o.pen.stroke();
+        } else {
+            o.pen.fill();
         }
     },
 
