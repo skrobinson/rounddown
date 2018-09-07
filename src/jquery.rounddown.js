@@ -47,6 +47,9 @@ $.widget('scottsdalecc.rounddown', {
 
     _init: function() {
         var canvas = this.getCanvas();
+        // Initialize non-public variables.
+        this._status = 'stopped';  // running status
+        // Initialize options.
         if (this.options.duration === null) {
             this.options.duration = Infinity;
         }
@@ -84,8 +87,9 @@ $.widget('scottsdalecc.rounddown', {
         this.drawCountdownLabel(o.duration - elapsed);
         if (elapsed < o.duration) {
             this.drawCountdownShape(endAngle, true);
-        } else if (this.getStatus() !== 'stopped') {
+        } else if (this.status !== 'stopped') {
             this.stop(o.onComplete);
+            this.status = 'stopped';
         }
     },
 
@@ -181,27 +185,13 @@ $.widget('scottsdalecc.rounddown', {
         return canvas;
     },
 
-    /* Returns the current status of the countdown timer as 'started',
-     * 'stopped', or 'paused'.
-     *
-     * @returns {String}
-     */
-    getStatus: function() {
-        var status = 'stopped';
-        if (this.options.pausedTimeElapsed !== null) {
-            status = 'paused';
-        } else if (this.options.interval != 0) {
-            status = 'started';
-        }
-        return status;
-    },
-
     /* Pause the countdown timer.  Ignored if timer is not started.
      */
     pause: function() {
-        if (this.getStatus() === 'started') {
+        if (this.status === 'started') {
             this.stop();
             this.options.pausedTimeElapsed = this.elapsedTime();
+            this.status = 'paused';
         }
     },
 
@@ -247,12 +237,13 @@ $.widget('scottsdalecc.rounddown', {
     /* Resume the paused countdown timer.  Ignored if timer is not paused.
      */
     resume: function() {
-        if (this.getStatus() === 'paused') {
+        if (this.status === 'paused') {
             this.start();
             // Update startedAt after starting.  Use a time previous to now
             // by the amount of time elapsed before pause.
             this.startedAt = new Date(new Date() - this.options.pausedTimeElapsed);
             this.options.pausedTimeElapsed = null;
+            this.status = 'started';
         }
     },
 
