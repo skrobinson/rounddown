@@ -45,7 +45,6 @@ $.widget('scottsdalecc.rounddown', {
     },
 
     _init: function() {
-        var canvas = this.getCanvas();
         // Initialize non-public variables.
         this._interval = 0;  // currently running interval timer
         this._status = 'stopped';  // running status
@@ -58,6 +57,7 @@ $.widget('scottsdalecc.rounddown', {
         this.options.height = this.options.width;
         this.options.arcX = this.options.radius + this.options.strokeWidth;
         this.options.arcY = this.options.arcX;
+        var canvas = this.getCanvas();
         this.options.pen = canvas[0].getContext("2d");
         this.options.pen.lineWidth = this.options.strokeWidth;
         this.options.pen.strokeStyle = this.options.strokeStyle;
