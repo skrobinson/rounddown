@@ -87,9 +87,9 @@ $.widget('scottsdalecc.rounddown', {
         this.drawCountdownLabel(o.duration - elapsed);
         if (elapsed < o.duration) {
             this.drawCountdownShape(endAngle, true);
-        } else if (this.status !== 'stopped') {
+        } else if (this._status !== 'stopped') {
             this.stop(o.onComplete);
-            this.status = 'stopped';
+            this._status = 'stopped';
         }
     },
 
@@ -188,10 +188,10 @@ $.widget('scottsdalecc.rounddown', {
     /* Pause the countdown timer.  Ignored if timer is not started.
      */
     pause: function() {
-        if (this.status === 'started') {
+        if (this._status === 'started') {
             this.stop();
             this.options.pausedTimeElapsed = this.elapsedTime();
-            this.status = 'paused';
+            this._status = 'paused';
         }
     },
 
@@ -237,13 +237,13 @@ $.widget('scottsdalecc.rounddown', {
     /* Resume the paused countdown timer.  Ignored if timer is not paused.
      */
     resume: function() {
-        if (this.status === 'paused') {
+        if (this._status === 'paused') {
             this.start();
             // Update startedAt after starting.  Use a time previous to now
             // by the amount of time elapsed before pause.
             this.startedAt = new Date(new Date() - this.options.pausedTimeElapsed);
             this.options.pausedTimeElapsed = null;
-            this.status = 'started';
+            this._status = 'started';
         }
     },
 
@@ -262,6 +262,7 @@ $.widget('scottsdalecc.rounddown', {
             timerInterval = 16;
         }
         this._interval = setInterval($.proxy(this.draw, this), timerInterval);
+        this._status = 'started';
     },
 
     /* Stop the countdown timer.  If given, call 'cb' after stopping.
@@ -274,5 +275,6 @@ $.widget('scottsdalecc.rounddown', {
                 cb();
             }
         }
+        this._status = 'stopped';
     }
 });
