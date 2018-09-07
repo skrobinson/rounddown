@@ -96,7 +96,7 @@ $.widget('scottsdalecc.rounddown', {
     drawCountdownLabel: function(millisecondsLeft) {
         // Get a shorthand reference to the options object.
         var o = this.options;
-        var secondsLeft = Math.floor(millisecondsLeft / 1000);
+        var secondsLeft = Math.round(millisecondsLeft / 1000);
         // Choose the units label based on quantity.  Default: plural.
         var label = o.label && o.label[1];
         if (secondsLeft === 1) {
