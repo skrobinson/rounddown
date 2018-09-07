@@ -119,9 +119,10 @@ $.widget('scottsdalecc.rounddown', {
             // Shift up 5/31 of font size, in pixels.  Why this amount?
             y = y - (o.fontSize / 6.2);
         }
-        // Draw the inner label with a drop shadow.
+        // Overwrite previous number with bgcolor/fillStyle to erase it.
         o.pen.fillStyle = o.fillStyle;
         o.pen.fillText(secondsLeft + 1, x, y);
+        // Draw the new inner label.
         o.pen.fillStyle = o.fontColor;
         o.pen.fillText(secondsLeft, x, y);
         if (label) {
