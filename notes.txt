@@ -2,15 +2,5 @@
 Changes that will help me
 -------------------------
 
-- onComplete should be an Array of callbacks or a Promise
-
-- should be only loosely coupled to interval for easier pause/resume
-
-- status should be a directly managed value, rather than deduced from
-other properties
-
 - auto-start after adding time should be a parameter to addSeconds,
 not a widget-wide preferenece
-
-- enable per-second callbacks
--- e.g. { 57: playTick, 58: playTick, 59: playTick }
