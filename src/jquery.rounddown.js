@@ -40,7 +40,7 @@ $.widget('scottsdalecc.rounddown', {
             this.options.fontSize = this.options.radius / 1.2;
         }
         if (!this.options.strokeWidth) {
-            this.options.strokeWidth = this.options.radius/4;
+            this.options.strokeWidth = this.options.radius / 4;
         }
     },
 
