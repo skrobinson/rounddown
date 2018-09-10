@@ -8,40 +8,67 @@
         <script src="../vendor/jquery.js"></script>
         <script src="../vendor/jquery-ui.js"></script>
         <script src="../src/jquery.rounddown.js" type="text/javascript" charset="utf-8"></script>
+        <style>
+            .button-holder button {
+                text-align: center;
+                width: 48%;
+            }
+
+            div.button-holder {
+                display: block;
+                margin: auto;
+                margin-left: 10px;
+                width: 40%;
+            }
+        </style>
     </head>
 
     <body>
         <div id="container">
             <div id="rounddown"></div>
-            <script type="text/javascript" charset="utf-8">
-
-                var rd =  $("#rounddown").rounddown({
-                                        radius      : 60,
-                                        duration    : 30000,
-                                        fontColor   : '#FFFFFF',
-                                        autostart   : false,
-                                        onComplete  : function () { console.log('done') }
-                                    });
-                rd.rounddown('start');
-                console.debug('rounddown ', rd);
-                $(document).on("click", "button", function (e){
-                    e.preventDefault();
-                    var type = $(this).attr("data-type");
-                    if (type === "time-remaining")
-                    {
-                        var timeRemaining = rd.rounddown('remainingTime');
-                        console.log(timeRemaining + ' ms');
-                    }
-                    else
-                    {
-                        var timeElapsed = rd.rounddown('elapsedTime');
-                        console.log(timeElapsed + ' ms');
-                    }
-                });
-          </script>
+            <div class="button-holder">
+                <button data-type="time-remaining">Time Remaining</button>
+                <button data-type="time-elapsed">Time Elapsed</button>
+            </div>
+            <div class="button-holder">
+                <button data-type="time-start">Start Countdown</button>
+                <button data-type="time-stop">Stop Countdown</button>
+            </div>
+            <div class="button-holder">
+                <button data-type="time-pause">Pause Countdown</button>
+                <button data-type="time-resume">Resume Countdown</button>
+            </div>
         </div>
-        <button data-type="time-remaining">Time Remaining</button>
-        <button data-type="time-elapsed">Time Elapsed</button>
 
+        <script type="text/javascript" charset="utf-8">
+
+            var rd =  $("#rounddown").rounddown({
+                                    radius      : 120,
+                                    duration    : 30000,
+                                    fontColor   : '#FFFFFF',
+                                    autostart   : false,
+                                    onComplete  : function () { console.log('done') }
+                                });
+            console.debug('rounddown ', rd);
+            $(document).on("click", "button", function (e){
+                e.preventDefault();
+                var type = $(this).attr("data-type");
+                if (type === "time-remaining") {
+                    var timeRemaining = rd.rounddown('remainingTime');
+                    console.log(timeRemaining + ' ms');
+                } else if (type === "time-elapsed") {
+                    var timeElapsed = rd.rounddown('elapsedTime');
+                    console.log(timeElapsed + ' ms');
+                } else if (type === "time-start") {
+                    rd.rounddown('start');
+                } else if (type === "time-stop") {
+                    rd.rounddown('stop');
+                } else if (type === "time-pause") {
+                    rd.rounddown('pause');
+                } else if (type === "time-resume") {
+                    rd.rounddown('resume');
+                }
+            });
+        </script>
     </body>
 </html>
