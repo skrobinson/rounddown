@@ -42,7 +42,7 @@
 
         <script type="text/javascript" charset="utf-8">
 
-            var rd =  $("#rounddown").rounddown({
+            let rd =  $("#rounddown").rounddown({
                                     radius      : 120,
                                     duration    : 30000,
                                     fontColor   : '#FFFFFF',
@@ -52,12 +52,12 @@
             console.debug('rounddown ', rd);
             $(document).on("click", "button", function (e){
                 e.preventDefault();
-                var type = $(this).attr("data-type");
+                let type = $(this).attr("data-type");
                 if (type === "time-remaining") {
-                    var timeRemaining = rd.rounddown('remainingTime');
+                    let timeRemaining = rd.rounddown('remainingTime');
                     console.log(timeRemaining + ' ms');
                 } else if (type === "time-elapsed") {
-                    var timeElapsed = rd.rounddown('elapsedTime');
+                    let timeElapsed = rd.rounddown('elapsedTime');
                     console.log(timeElapsed + ' ms');
                 } else if (type === "time-start") {
                     rd.rounddown('start');
