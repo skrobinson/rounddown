@@ -201,7 +201,7 @@ $.widget('scottsdalecc.rounddown', {
      */
     pause: function() {
         if (this._status === 'started') {
-            this.stop();
+            this.stopTick();
             this._pausedTimeElapsed = this.elapsedTime();
             this._status = 'paused';
         }
@@ -268,6 +268,8 @@ $.widget('scottsdalecc.rounddown', {
      * method is called, the countdown is stopped and restarted.
      */
     start: function() {
+        if (this._status !== 'stopped') {
+            this.stopTick();
         }
         this.drawCountdownShape(fullCircle, true);
         this.drawCountdownLabel(this.options.duration);
@@ -290,13 +292,19 @@ $.widget('scottsdalecc.rounddown', {
     /* Stops the countdown timer.  If given, call 'cb' after stopping.
      */
     stop: function(cb) {
-        if (this._interval != 0) {
-            clearInterval(this._interval);
-            this._interval = 0;
-            if (cb) {
-                cb();
-            }
+        this.stopTick();
+        if (cb) {
+            cb();
         }
         this._status = 'stopped';
+    },
+
+    /* Stops the interval timer.
+     */
+    stopTick: function() {
+        if (this._interval != 0) {
+            clearInterval(this._interval);
+        }
+        this._interval = 0;
     }
 });
