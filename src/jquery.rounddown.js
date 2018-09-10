@@ -48,7 +48,7 @@ $.widget('scottsdalecc.rounddown', {
         // Initialize non-public variables.
         this._interval = 0;  // currently running interval timer
         this._status = 'stopped';  // running status
-        this._pausedTimeElapsed = null;
+        this._pausedTimeElapsed = null;  // elapsed time at pause
         this._timerInterval = 1000;  // course-grained ticks
         if (this.options.smooth) {
             this._timerInterval = 16;  // fine-grained ticks
