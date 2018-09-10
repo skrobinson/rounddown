@@ -49,6 +49,10 @@ $.widget('scottsdalecc.rounddown', {
         this._interval = 0;  // currently running interval timer
         this._status = 'stopped';  // running status
         this._pausedTimeElapsed = null;
+        this._timerInterval = 1000;  // course-grained ticks
+        if (this.options.smooth) {
+            this._timerInterval = 16;  // fine-grained ticks
+        }
         // Initialize options.
         if (this.options.duration === null) {
             this.options.duration = Infinity;
@@ -271,9 +275,6 @@ $.widget('scottsdalecc.rounddown', {
         this.drawCountdownShape(fullCircle, true);
         this.drawCountdownLabel(this.options.duration);
         var timerInterval = 1000;
-        if (this.options.smooth) {
-            timerInterval = 16;
-        }
         this._interval = setInterval(this.draw.bind(this), timerInterval);
         this._status = 'started';
     },
