@@ -293,13 +293,10 @@ $.widget('scottsdalecc.rounddown', {
         }
     },
 
-    /* Stops the countdown timer.  If given, call 'cb' after stopping.
+    /* Stops the countdown timer.
      */
-    stop: function(cb) {
+    stop: function() {
         this.stopTick();
-        if (cb) {
-            cb();
-        }
         this._status = 'stopped';
     },
 
