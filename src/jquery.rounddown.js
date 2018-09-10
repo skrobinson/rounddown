@@ -251,7 +251,7 @@ $.widget('scottsdalecc.rounddown', {
         return this.options.duration - this.elapsedTime();
     },
 
-    /* Resume the paused countdown timer.  Ignored if timer is not paused.
+    /* Resumes the paused countdown timer.  Ignored if timer is not paused.
      */
     resume: function() {
         if (this._status === 'paused') {
@@ -264,7 +264,7 @@ $.widget('scottsdalecc.rounddown', {
         }
     },
 
-    /* Start the countdown timer.  If the countdown is running when this
+    /* Starts the countdown timer.  If the countdown is running when this
      * method is called, the countdown is stopped and restarted.
      */
     start: function() {
@@ -279,7 +279,7 @@ $.widget('scottsdalecc.rounddown', {
         this._status = 'started';
     },
 
-    /* Stop the countdown timer.  If given, call 'cb' after stopping.
+    /* Stops the countdown timer.  If given, call 'cb' after stopping.
      */
     stop: function(cb) {
         if (this._interval != 0) {
