@@ -27,7 +27,6 @@ $.widget('scottsdalecc.rounddown', {
         fontSize: undefined,           // the font size, dynamically calulated if omitted in options
         fontWeight: 700,               // the font weight
         label: ["second", "seconds"],  // the label to use or false if none
-        onComplete: function() {},
         onTime: [],                    // callbacks for each second
         smooth: false,                 // should the timer be smooth or stepping
         startOverAfterAdding: true,    // Start the timer over after time is added with addSeconds
@@ -97,7 +96,7 @@ $.widget('scottsdalecc.rounddown', {
         if (elapsed < o.duration) {
             this.drawCountdownShape(endAngle, true);
         } else if (this._status !== 'stopped') {
-            this.stop(o.onComplete);
+            this.stop();
             this._status = 'stopped';
         }
     },
