@@ -279,6 +279,16 @@ $.widget('scottsdalecc.rounddown', {
         this._status = 'started';
     },
 
+    /* Starts the interval timer with callbacks to update the display.
+     */
+    startTick: function() {
+        // Only process if there is not an existing interval.
+        if (this._interval === 0) {
+            this._interval = setInterval(this.draw.bind(this),
+                                         this._timerInterval);
+        }
+    },
+
     /* Stops the countdown timer.  If given, call 'cb' after stopping.
      */
     stop: function(cb) {
