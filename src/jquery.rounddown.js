@@ -28,6 +28,7 @@ $.widget('scottsdalecc.rounddown', {
         fontWeight: 700,               // the font weight
         label: ["second", "seconds"],  // the label to use or false if none
         onComplete: function() {},
+        onTime: [],                    // callbacks for each second
         smooth: false,                 // should the timer be smooth or stepping
         startOverAfterAdding: true,    // Start the timer over after time is added with addSeconds
         strokeStyle: "#477050",        // the color of the stroke
@@ -85,10 +86,14 @@ $.widget('scottsdalecc.rounddown', {
         var elapsed = this.elapsedTime();
         // Calculate endAngle as a relative angular distance from startAngle.
         var endAngle = 2 * Math.PI * (1 - elapsed / o.duration) + startAngle;
+        var remainder = o.duration - elapsed;
+        var secondsLeft = Math.round(remainder / 1000);
         // Erase the canvas before beginning new drawing.
         o.pen.clearRect(0, 0, o.width, o.height);
         this.drawCountdownShape(fullCircle, false);
-        this.drawCountdownLabel(o.duration - elapsed);
+        this.drawCountdownLabel(remainder);
+        // Run per-second callback, if one is assigned.
+        o.onTime[secondsLeft] && o.onTime[secondsLeft](secondsLeft);
         if (elapsed < o.duration) {
             this.drawCountdownShape(endAngle, true);
         } else if (this._status !== 'stopped') {

@@ -42,14 +42,21 @@
 
         <script type="text/javascript" charset="utf-8">
 
+            let duration = 30000;
             let rd =  $("#rounddown").rounddown({
                                     radius      : 120,
-                                    duration    : 30000,
+                                    duration    : duration,
                                     fontColor   : '#FFFFFF',
                                     autostart   : false,
-                                    onComplete  : function () { console.log('done') }
+                                    onComplete  : function () { console.log('done') },
+                                    // Must use new Array when later using fill method.
+                                    onTime      : new Array(duration / 1000)
                                 });
             console.debug('rounddown ', rd);
+            rd.rounddown('option', 'onTime')
+                .fill(console.debug.bind(console, 'tick'), 1, 4)
+                .fill(console.debug.bind(console, 'bong'), 0, 1);
+
             $(document).on("click", "button", function (e){
                 e.preventDefault();
                 let type = $(this).attr("data-type");
