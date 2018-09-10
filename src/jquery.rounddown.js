@@ -255,7 +255,7 @@ $.widget('scottsdalecc.rounddown', {
      */
     resume: function() {
         if (this._status === 'paused') {
-            this.start();
+            this.startTick();
             // Update startedAt after starting.  Use a time previous to now
             // by the amount of time elapsed before pause.
             this.startedAt = new Date(new Date() - this._pausedTimeElapsed);
@@ -268,14 +268,12 @@ $.widget('scottsdalecc.rounddown', {
      * method is called, the countdown is stopped and restarted.
      */
     start: function() {
-        if (this._interval != 0) {
-            clearInterval(this._interval);
         }
-        this.startedAt = new Date();
         this.drawCountdownShape(fullCircle, true);
         this.drawCountdownLabel(this.options.duration);
-        var timerInterval = 1000;
-        this._interval = setInterval(this.draw.bind(this), timerInterval);
+        this.startTick();
+        this.startedAt = new Date();
+        this._pausedTimeElapsed = null;
         this._status = 'started';
     },
 
