@@ -124,7 +124,7 @@ $.widget('scottsdalecc.rounddown', {
         // Tell Aria the important part of the label.
         o.ariaText.text(secondsLeft);
         // Set the context's font.
-        o.pen.font = `${o.fontWeight} ${o.fontSize} px ${o.fontFamily}`;
+        o.pen.font = `${o.fontWeight} ${o.fontSize}px ${o.fontFamily}`;
         if (label) {
             // Shift up 5/31 of font size, in pixels.  Why this amount?
             y = y - (o.fontSize / 6.2);
@@ -136,7 +136,7 @@ $.widget('scottsdalecc.rounddown', {
         o.pen.fillStyle = o.fontColor;
         o.pen.fillText(secondsLeft, x, y);
         if (label) {
-            o.pen.font = `normal small-caps  ${o.fontSize / 3} px ${o.fontFamily}`;
+            o.pen.font = `normal small-caps ${o.fontSize / 3}px ${o.fontFamily}`;
             // Draw units (e.g. seconds) under circle.
             o.pen.fillText(label, o.width / 2, o.height / 2 + (o.fontSize / 2.2));
         }
