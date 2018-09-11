@@ -46,6 +46,7 @@ $.widget('scottsdalecc.rounddown', {
 
     _init: function() {
         // Initialize non-public variables.
+        this._currTime = -1;
         this._interval = 0;  // currently running interval timer
         this._status = 'stopped';  // running status
         this._pausedTimeElapsed = null;  // elapsed time at pause
@@ -90,8 +91,11 @@ $.widget('scottsdalecc.rounddown', {
         o.pen.clearRect(0, 0, o.width, o.height);
         this.drawCountdownShape(fullCircle, false);
         this.drawCountdownLabel(remainder);
-        // Run per-second callback, if one is assigned.
-        o.onTime[remainder] && o.onTime[remainder](remainder);
+        // Run per-second callback, if one is assigned.  But, only once.
+        if (o.onTime[remainder] && remainder !== this._currTime) {
+            o.onTime[remainder](remainder);
+            this._currTime = remainder;
+        }
         if (elapsed < o.duration) {
             this.drawCountdownShape(endAngle, true);
         } else if (this._status !== 'stopped') {
@@ -278,6 +282,7 @@ $.widget('scottsdalecc.rounddown', {
         this.startTick();
         this.startedAt = new Date();
         this._pausedTimeElapsed = null;
+        this._currTime = -1;
         this._status = 'started';
     },
 
