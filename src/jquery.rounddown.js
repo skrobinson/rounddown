@@ -85,14 +85,13 @@ $.widget('scottsdalecc.rounddown', {
         var elapsed = this.elapsedTime();
         // Calculate endAngle as a relative angular distance from startAngle.
         var endAngle = 2 * Math.PI * (1 - elapsed / o.duration) + startAngle;
-        var remainder = o.duration - elapsed;
-        var secondsLeft = Math.round(remainder / 1000);
+        var remainder = Math.ceil((o.duration - elapsed) / 1000);
         // Erase the canvas before beginning new drawing.
         o.pen.clearRect(0, 0, o.width, o.height);
         this.drawCountdownShape(fullCircle, false);
         this.drawCountdownLabel(remainder);
         // Run per-second callback, if one is assigned.
-        o.onTime[secondsLeft] && o.onTime[secondsLeft](secondsLeft);
+        o.onTime[remainder] && o.onTime[remainder](remainder);
         if (elapsed < o.duration) {
             this.drawCountdownShape(endAngle, true);
         } else if (this._status !== 'stopped') {
@@ -103,12 +102,11 @@ $.widget('scottsdalecc.rounddown', {
 
     /* drawCountdownLabel - draw the inner, and optionally the outer, label
      *
-     * @param {Number} millisecondsLeft - the time until completion
+     * @param {Number} secondsLeft - the time until completion
      */
-    drawCountdownLabel: function(millisecondsLeft) {
+    drawCountdownLabel: function(secondsLeft) {
         // Get a shorthand reference to the options object.
         var o = this.options;
-        var secondsLeft = Math.round(millisecondsLeft / 1000);
         // Choose the units label based on quantity.  Default: plural.
         var label = o.label && o.label[1];
         if (secondsLeft === 1) {
@@ -276,7 +274,7 @@ $.widget('scottsdalecc.rounddown', {
             this.stopTick();
         }
         this.drawCountdownShape(fullCircle, true);
-        this.drawCountdownLabel(this.options.duration);
+        this.drawCountdownLabel(this.options.duration / 1000);
         this.startTick();
         this.startedAt = new Date();
         this._pausedTimeElapsed = null;
