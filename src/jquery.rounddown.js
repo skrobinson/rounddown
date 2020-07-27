@@ -29,7 +29,6 @@ $.widget('scottsdalecc.rounddown', {
         label: ["second", "seconds"],  // the label to use or false if none
         onTime: [],                    // callbacks for each second
         smooth: false,                 // should the timer be smooth or stepping
-        startOverAfterAdding: true,    // Start the timer over after time is added with addSeconds
         strokeStyle: "#477050",        // the color of the stroke
         strokeWidth: undefined,        // the stroke width, dynamically calulated if omitted in options
         radius: 15.5                   // radius of arc
