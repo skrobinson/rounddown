@@ -1,9 +1,9 @@
 /*
- * RoundDown - v1.0.1
+ * RoundDown - v2.0.0
  *
  * A round countdown timer adapted from Countdown 360.
  *
- * RoundDown is copyright 2017,2018 by Scottsdale Community College.
+ * RoundDown is copyright 2017,2018,2020 by Scottsdale Community College.
  * Sean Robinson <sean.robinson@scottsdalecc.edu>
  *
  * Countdown360 made by John Schult
