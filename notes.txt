@@ -1,6 +1,8 @@
--------------------------
-Changes that will help me
--------------------------
+-----------------------
+Possible Future Changes
+-----------------------
 
-- auto-start after adding time should be a parameter to addSeconds,
-not a widget-wide preferenece
+- add onStop callback to be called whenever the timer stops
+
+- find a way to have a fixed canvas size with a resizable viewport
+and not capture extra screen space
