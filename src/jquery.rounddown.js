@@ -42,9 +42,6 @@ $.widget('scottsdalecc.rounddown', {
         if (!this.options.strokeWidth) {
             this.options.strokeWidth = this.options.radius / 4;
         }
-    },
-
-    _init: function() {
         // Initialize non-public variables.
         this._currTime = -1;
         this._interval = 0;  // currently running interval timer
@@ -71,6 +68,9 @@ $.widget('scottsdalecc.rounddown', {
         this.options.pen.textBaseline = "middle";
         this.options.ariaText = canvas.children('span');
         this.options.pen.clearRect(0, 0, this.options.width, this.options.height);
+    },
+
+    _init: function() {
         this.draw();
         if (this.options.autostart) {
             this.start();
