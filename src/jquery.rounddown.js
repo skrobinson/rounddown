@@ -189,6 +189,10 @@ $.widget('scottsdalecc.rounddown', {
      * @returns {jQuery object}
      */
     getCanvas: function() {
+        // Recycle existing canvas, if defined.
+        if (this.options.pen !== undefined && this.options.pen.canvas !== undefined) {
+            return $(this.options.pen.canvas);
+        }
         var uniqueId = 'rounddown_' + Date.now().toString(36);
         var text = $('<span></span>')
                         .attr({
