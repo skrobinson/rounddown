@@ -115,6 +115,9 @@ RoundDown
 
 Copyright 2017-2021 Scottsdale Community College (published under the MIT License)
 
-Original Countdown 360
+
+Original jQuery countdown360
+
+https://github.com/johnschult/jquery.countdown360
 
 [MIT License](http://johnschult.mit-license.org/) © John Schult
