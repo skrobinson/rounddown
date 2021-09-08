@@ -6,7 +6,7 @@
  * RoundDown is copyright 2017,2018,2020 by Scottsdale Community College.
  * Sean Robinson <sean.robinson@scottsdalecc.edu>
  *
- * Countdown360 made by John Schult
+ * Forked from Countdown360 by John Schult
  * https://github.com/johnschult/jquery.countdown360
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
