@@ -1,7 +1,7 @@
 # RoundDown jQuery UI Widget
 
 
-### A countdown timer
+A Countdown Timer
 
 This jQuery UI Widget provides a circular countdown timer with customizable
 settings.
