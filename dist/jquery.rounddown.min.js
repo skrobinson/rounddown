@@ -1,5 +1,5 @@
 /*
- * RoundDown - v2.0.0
+ * RoundDown - v2.0.1
  *
  * A round countdown timer adapted from Countdown 360.
  *
