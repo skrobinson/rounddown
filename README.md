@@ -113,7 +113,8 @@ rd.start();
 
 RoundDown
 
-Copyright 2017-2021 Scottsdale Community College (published under the MIT License)
+Copyright 2017,2018,2020 Scottsdale Community College
+Made available under the MIT License.
 
 
 Original jQuery countdown360
