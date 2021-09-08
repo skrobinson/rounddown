@@ -9,6 +9,8 @@
  * Forked from Countdown360 by John Schult
  * https://github.com/johnschult/jquery.countdown360
  *
+ * SPDX-License-Identifier: MIT
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
  * the Software without restriction, including without limitation the rights to
